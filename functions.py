@@ -4,8 +4,11 @@ import math
 def sphere(x):
     return sum([y**2 for y in x])
 
-def rosenbrock(x1, x2):
-    return sum([100*((x**2 - y)**2) + (x - 1)**2 for (x, y) in zip(x1,x2)])
+def rosenbrock(x):
+    res=0
+    for id in range(1,len(x)):
+        res+=100*((x[id]**2 - x[id-1])**2) + (x[id-1] - 1)**2
+    return res
 
 def ackley(x):
     return -20 * np.exp(-0.2 * (sum([y**2 for y in x])/len(x) ** 0.5)) - \
@@ -17,14 +20,7 @@ def griewank(x):
 def rastrigin(x):
     return sum([y**2 - 10*np.cos(2*math.pi*y) + 10 for y in x])
 
-def weierstrass(x):
-    a = 0.5
-    b = 3
-    k_max = 20
+def schwefel(x):
+    a = 418.9829
+    return a*len(x)-sum([y*math.sin(math.sqrt(abs(y))) for y in x])
 
-    def sub_sum(x):
-        return sum([a**k * np.cos(2*math.pi*(b**k)*(x + 0.5)) for k in range(k_max)])
-
-    val = sum([sub_sum(x0) for x0 in x]) - (len(x) * sum([a**k * np.cos(2*math.pi*(b**k)*0.5) for k in range(k_max)]))
-
-    return val
